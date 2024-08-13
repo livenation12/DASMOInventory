@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#dt-length-0 {
+  width: 3rem;
+}
+
+.dt-input option {
+  font-size: 13px;
+  color: #303030;
+}
+
+.dt-search input {
+  border: hsl(from color h s l);
+  font-size: 12px;
+  height: 30px;
+}
+
+.dt-search label {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+#inventoryTable tbody tr:hover {
+  color: #4b5563;
+  background: #ffffffe6;
+  transition: all 0.4s;
+}
+
+.swal2-confirm.swal2-styled {
+  background-color: #3b82f6;
+}
