@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-#dt-length-0 {
+/* #dt-length-0 {
   width: 3rem;
 }
 
@@ -22,7 +22,7 @@
 .dt-search label {
   color: #ffffff;
   font-size: 13px;
-}
+} */
 
 #inventoryTable tbody tr:hover {
   color: #4b5563;

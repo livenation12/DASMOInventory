@@ -11,6 +11,8 @@
                                                   <strong class="text-base">Property number:</strong><i class="col-span-2"><?= $details->propNumber ?></i>
                                                   <strong class="text-base">Serial number:</strong><i class="col-span-2"><?= $details->serialNumber ?></i>
                                                   <strong class="text-base">Designation:</strong><i class="col-span-2"><?= $details->designation ?></i>
+                                                  <strong class="text-base">End User:</strong><i class="col-span-2"><?= $details->endUser ?></i>
+
                                                   <?php if (!empty($details->currentLocation)) : ?>
                                                             <strong class="text-lg">Current Location:</strong><span class="col-span-2 text-base font-semibold underline text-blue-400"><?= $details->currentLocation ?></span>
                                                   <?php endif ?>

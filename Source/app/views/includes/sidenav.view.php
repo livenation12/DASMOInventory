@@ -24,14 +24,20 @@
             </a>
          </li>
          <li>
-
-         </li>
-         <li>
             <a class="" href="<?= ROOT ?>inventory">
                <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize
                                                      <?= getActiveTab() === 'inventory' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : '' ?>" type="button">
                   <i class="fa-solid fa-warehouse"></i>
                   <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">inventory</p>
+               </button>
+            </a>
+         </li>
+         <li>
+            <a class="" href="<?= ROOT ?>transactions">
+               <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize
+                                                     <?= getActiveTab() === 'transactions' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : '' ?>" type="button">
+                  <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                  <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">transactions</p>
                </button>
             </a>
          </li>

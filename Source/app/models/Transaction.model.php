@@ -135,7 +135,28 @@ class Transaction extends Model
                                         $data->approverName = $getUser->firstname . " " . $getUser->lastname;
                               }
                     }
-
                     return $data;
+          }
+
+          public function getFullTransactionDetails()
+          {
+                    $transactions = $this->findAll();
+                    if (is_array($transactions) && !empty($transactions)) {
+                              $item = new Item();
+                              foreach ($transactions as &$transaction) {
+                                        // Fetch the item details based on the itemId
+                                        $itemDetails = $item->single('itemId', $transaction->itemId);
+
+                                        // Merge the item details directly into the transaction object
+                                        foreach ($itemDetails as $key => $value) {
+                                                  $transaction->$key = $value;
+                                        }
+                              }
+                              // Make sure to unset the reference to avoid potential side effects
+                              unset($transaction);
+
+                              return $transactions;
+                    }
+                    return [];
           }
 }
