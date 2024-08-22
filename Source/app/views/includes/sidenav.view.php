@@ -16,8 +16,7 @@
       <ul class="mb-4 flex flex-col gap-1">
          <li>
             <a aria-current="page" href="<?= ROOT ?>home">
-               <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white capitalize gap-4 px-4 w-full flex items-center
-                                                  <?= getActiveTab() === 'home' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : '' ?>" type="button">
+               <button class="sidenav-link <?= getActiveTab() === 'home' ? 'active-sidenav' : '' ?>" type="button">
                   <i class="fa-solid fa-gauge"></i>
                   <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">dashboard</p>
                </button>
@@ -25,8 +24,7 @@
          </li>
          <li>
             <a class="" href="<?= ROOT ?>inventory">
-               <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize
-                                                     <?= getActiveTab() === 'inventory' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : '' ?>" type="button">
+               <button class="sidenav-link <?= getActiveTab() === 'inventory' ? 'active-sidenav' : '' ?>" type="button">
                   <i class="fa-solid fa-warehouse"></i>
                   <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">inventory</p>
                </button>
@@ -34,10 +32,17 @@
          </li>
          <li>
             <a class="" href="<?= ROOT ?>transactions">
-               <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize
-                                                     <?= getActiveTab() === 'transactions' ? 'bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85]' : '' ?>" type="button">
+               <button class="sidenav-link <?= getActiveTab() === 'transactions' ? 'active-sidenav' : '' ?>" type="button">
                   <i class="fa-solid fa-arrow-right-arrow-left"></i>
                   <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">transactions</p>
+               </button>
+            </a>
+         </li>
+         <li>
+            <a class="" href="<?= ROOT ?>keepers">
+               <button class="sidenav-link <?= getActiveTab() === 'keepers' ? 'active-sidenav' : '' ?>" type="button">
+                  <i class="fa-solid fa-users"></i>
+                  <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">keepers</p>
                </button>
             </a>
          </li>

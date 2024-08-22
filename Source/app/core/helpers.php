@@ -43,7 +43,11 @@ function randomString($length)
 
 function formatDate($date)
 {
-        return date("M j, Y", strtotime($date));
+        if(!empty($date)){
+                return date("M j, Y hA", strtotime($date));
+        }
+        return "";
+       
 }
 
 function show($data)
@@ -66,7 +70,6 @@ function viewPath($view)
                 return ("../app/views/404.view.php");
         }
 }
-
 
 function getActiveTab()
 {

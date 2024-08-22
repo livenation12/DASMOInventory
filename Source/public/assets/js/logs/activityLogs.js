@@ -25,8 +25,6 @@ $(document).ready(function () {
                   {
                         orderable: true,
                         render: function (data, type, row) {
-                              console.log(row);
-
                               const colorClass = getClassByAction(row.action);
                               return `
                                                             <div class=" flex flex-col rounded py-2 text-sm">

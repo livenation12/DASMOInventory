@@ -8,42 +8,29 @@ class Login extends Controller
             $this->redirect('home');
             exit();
         }
-        $errors = [];
+
         $csrfToken = Token::generateCSRFToken();
-        if (isset($_POST["login"])) {
+        $this->view("login", [
+            "csrfToken" => $csrfToken,
+        ]);
+    }
+    function verify()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $errors = [];
             // Validate CSRF token
             if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
                 $errors[] = "Invalid token";
             } else {
                 $user = new User();
-                $log = new Log();
-                if ($row = $user->where("username", $_POST["username"])) {
-                    $row = $row[0];
-                    if (password_verify($_POST["password"], $row->password)) {
-                        $_POST["attempt"] = "success";
-                        $log->insert($_POST);
-                        // Clear the CSRF token after successful login
-                        unset($_SESSION['csrfToken']);
-                        $_SESSION["login_success"] = true;
-                        Auth::authenticate($row);
-                        $this->redirect('home');
-                        exit();
-                    } else {
-                        $errors[] = "Password incorrect";
-                    }
-                } else {
-                    $errors[] = "User does not exist in our system";
-                }
-
-                if (!empty($errors)) {
-                    $log->insert($_POST);
-                }
+                $user->login($_POST);
+                $errors = $user->errors;
+            }
+            if (empty($errors)) {
+                echo json_encode(["success" => true]);
+            } else {
+                echo json_encode(["success" => false, "error" => $errors[0]]);
             }
         }
-
-        $this->view("login", [
-            "errors" => $errors,
-            "csrfToken" => $csrfToken
-        ]);
     }
 }

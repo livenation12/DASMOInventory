@@ -1,6 +1,6 @@
 <?php $this->view("includes/header"); ?>
 <div class="mt-3">
-          <a href="<?= ROOT ?>inventory"><i class="fa-solid fa-arrow-left ms-2 my-2"></i>
+          <a onclick="history.back()"><i class="fa-solid fa-arrow-left ms-2 my-2"></i>
                     <strong class="text-xl font-bold tracking-wide ms-2">Item Details</strong>
           </a>
           <div class="grid grid-cols-1 lg:grid-cols-3">

@@ -3,6 +3,7 @@
 
 class Auth
 {
+          
           public static function authenticate($user)
           {
                     $_SESSION["userData"] = [
@@ -60,4 +61,6 @@ class Auth
                     // If the method doesn't start with 'get' or the property doesn't exist, return "Unknown"
                     return "Unknown";
           }
+
+  
 }

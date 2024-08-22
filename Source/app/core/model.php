@@ -50,30 +50,59 @@ class Model extends Database
         {
 
                 $query = "SELECT * FROM $this->table WHERE $column = :value";
-                $data = $this->query(
+                if ($data = $this->query(
                         $query,
                         [
                                 "value" => $value
                         ]
 
-                );
-                //run methods after select
-                if (is_array($data)) {
+                )) {
                         $data = $data[0];
-                }
-                if (property_exists($this, "functionsAfterSelect")) {
-                        foreach ($this->functionsAfterSelect as $func) {
-                                $data = $this->$func($data);
+                        if (property_exists($this, "functionsAfterSelect")) {
+                                foreach ($this->functionsAfterSelect as $func) {
+                                        $data = $this->$func($data);
+                                }
+                                return $data;
                         }
+                        return $data;
                 }
-                
-                return $data;
+                return false;
         }
+        private $sensitiveData = [
+                "password",
+                "cpassword"
+        ];
 
+        public function sanitize($data)
+        {
+                // If $data is an array, sanitize each element individually
+                if (is_array($data)) {
+                        foreach ($data as $key => $value) {
+                                // Check if the key is in the sensitive data list
+                                if (in_array($key, $this->sensitiveData)) {
+                                        // Skip sanitizing sensitive data
+                                        continue;
+                                }
+                                // Sanitize the value
+                                $data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+                        }
+                        return $data;
+                }
+
+                // Handle cases where $data is not an array
+                if (is_string($data)) {
+                        return filter_var($data, FILTER_SANITIZE_STRING);
+                }
+
+                // Handle invalid data type
+                $this->errors[] = 'Invalid data';
+                return null;
+        }
 
         public function insert($data)
         {
                 // Remove unwanted columns
+                $data = $this->sanitize($data);
                 if (property_exists($this, "allowedColumns")) {
                         foreach ($data as $key => $columns) {
                                 if (!in_array($key, $this->allowedColumns)) {
@@ -142,5 +171,20 @@ class Model extends Database
                         // Handle the case where 'id' is not set or $result is not an object
                         return null; // or throw new Exception("ID not found");
                 }
+        }
+
+        public function fullDetails($joinTable)
+        {
+                $referenceId = rtrim($joinTable, "s") . "Id";
+                $query =  "SELECT * FROM $this->table INNER JOIN $joinTable ON $this->table.$referenceId=$joinTable.$referenceId";
+                $data = $this->query($query);
+                if ($data) {
+                        if (property_exists($this, "functionsAfterSelectFullDetails")) {
+                                foreach ($this->functionsAfterSelectFullDetails as $func) {
+                                        $data = $this->$func($data);
+                                }
+                        }
+                }
+                return $data;
         }
 }

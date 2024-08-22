@@ -1,6 +1,6 @@
 <!-- drawer component -->
 <div id="pullOutForm" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-[500px] dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-          <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-100">
+          <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold">
                     <i class="fa-solid fa-arrows-turn-right me-2"></i> Pull Out Form
           </h5>
           <button type="button" data-drawer-hide="pullOutForm" aria-controls="pullOutForm" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -65,7 +65,7 @@
                                         </div>
                                         <div>
                                                   <label for="returnDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Return Date</label>
-                                                  <input required value="<?= date('Y-m-d', strtotime('+3 days')) ?>" type="date" name="returnDate" id="returnDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                                                  <input required type="datetime-local" name="returnDate" id="returnDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                         </div>
 
                                         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pull Out</button>
