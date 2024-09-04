@@ -143,7 +143,7 @@ class Model extends Database
                 }
                 $string = "";
                 foreach ($data as $key => $value) {
-                        $string .= $key . "= :" . $key . ", ";
+                        $string .= $key . " = :" . $key . ", ";
                 }
                 $string = trim($string, ", ");
 
@@ -152,13 +152,14 @@ class Model extends Database
                 return $this->query($query, $data);
         }
 
-
         public function delete($id)
         {
                 $data["id"] = $id;
                 $query = "DELETE FROM $this->table WHERE id = :id";
                 return  $this->query($query, $data);
         }
+
+
         public function getIdByTableId($tableCol, $tableId)
         {
                 $result = $this->single($tableCol, $tableId);
@@ -186,5 +187,10 @@ class Model extends Database
                         }
                 }
                 return $data;
+        }
+
+        public function getTableColumnId()
+        {
+                return rtrim($this->table, "s") . "Id";
         }
 }

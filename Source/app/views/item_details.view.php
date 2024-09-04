@@ -20,16 +20,18 @@
                                         <span class="text-xs float-end">Encoded by: <i class=""><?= $details->encoder ?></i></span>
                               </div>
                               <div class="flex text-white gap-x-2">
-                                        <?php if (!empty($details->currentLocation)) : ?>
+                                        <?php if (!empty($details->currentLocation)) { ?>
 
                                                   <button data-modal-target="returnItemModal" data-modal-toggle="returnItemModal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                                             <i class="fa-solid fa-undo"></i> Return
                                                   </button>
-                                        <?php else :  ?>
+                                                  <?php $this->view("components/item_return_modal", ["details" => $details, "csrfToken" => $csrfToken, "activeTransaction" => $activeTransaction]) ?>
+                                        <?php } else if ($details->inHouse) {  ?>
                                                   <button type="button" data-drawer-target="pullOutForm" data-drawer-show="pullOutForm" data-drawer-placement="right" aria-controls="pullOutForm" class="bg-yellow-700 hover:bg-yellow-800 focus:ring-1 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2 focus:outline-none" type="button" data-drawer-target="pullOutForm" data-drawer-show="pullOutForm" data-drawer-placement="right" aria-controls="pullOutForm">
                                                             <i class="fa-solid fa-arrows-turn-right"></i> Pull out
                                                   </button>
-                                        <?php endif ?>
+                                                  <?php $this->view("components/item_pullout_drawer", ["details" => $details, "csrfToken" => $csrfToken]) ?>
+                                        <?php } ?>
 
                                         <button id="manageDropdown" data-dropdown-toggle="dropdown" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800" type="button">Manage
                                                   <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -42,10 +44,10 @@
                                                   <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="manageDropdown">
                                                             <li>
 
-                                                                      <div class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" type="button" data-drawer-target="itemUpdate" data-drawer-show="itemUpdate" data-drawer-placement="right" aria-controls="itemUpdate">Update</div>
+                                                                      <div class="block px-4 py-2 hover:bg-gray-600 hover:text-white" type="button" data-drawer-target="itemUpdate" data-drawer-show="itemUpdate" data-drawer-placement="right" aria-controls="itemUpdate">Update</div>
                                                             </li>
                                                             <li>
-                                                                      <div data-modal-target="itemDeleteModal" data-modal-toggle="itemDeleteModal" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" type="button">
+                                                                      <div data-modal-target="itemDeleteModal" data-modal-toggle="itemDeleteModal" class="block px-4 py-2 hover:bg-gray-600 hover:text-white" type="button">
                                                                                 Delete
                                                                       </div>
                                                             </li>
@@ -101,10 +103,7 @@
                     </div>
           </div>
 </div>
-
-<?php $this->view("includes/footer") ?>
-<?php $this->view("components/item_pullout_drawer", ["details" => $details, "csrfToken" => $csrfToken]) ?>
-<?php $this->view("components/item_return_modal", ["details" => $details, "csrfToken" => $csrfToken, "activeTransaction" => $activeTransaction]) ?>
 <?php $this->view("components/item_update_drawer", ["details" => $details, "csrfToken" => $csrfToken]) ?>
 <?php $this->view("components/item_deleteconfirm_modal", ["details" => $details, "csrfToken" => $csrfToken]) ?>
 <script src="<?= JS ?>items.js"></script>
+<?php $this->view("includes/footer") ?>

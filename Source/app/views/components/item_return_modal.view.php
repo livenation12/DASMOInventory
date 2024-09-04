@@ -20,7 +20,7 @@
                                         <input type="hidden" name="csrfToken" value="<?= escape($csrfToken); ?>">
                                         <input type="hidden" name="itemId" value="<?= escape($details->itemId); ?>">
                                         <input type="hidden" name="transactionId" value="<?= escape($activeTransaction->transactionId); ?>">
-                                        <p class=" mx-10 text-lg my-8">Mark as returned?</p>
+                                        <p class=" mx-10 text-lg text-black my-8">Mark as returned?</p>
                                         <!-- Modal footer -->
                                         <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                                   <button data-modal-hide="returnItemModal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Return</button>

@@ -49,14 +49,17 @@ $(document).ready(function () {
                 data: 'status',
                 orderable: false,
                 render: function (data, type, row) {
-                    return `<i class='fa-solid fa-circle-dot animate-pulse ${data > 0 ? 'text-yellow-500' : 'text-blue-500'} '></i>
+                    return `
+                <div class="inline-flex justify-center items-center gap-x-2">
+                    <i class='fa-solid fa-circle-dot animate-pulse ${data > 0 ? 'text-yellow-500' : 'text-blue-500'} '></i>
                     <a title='Full details' href='${dasmoBaseUrl}inventory/items/${row.itemId}'>
                       <button
-                        class='py-2 px-4 w-10'
+                        class='py-2 px-4 hover:bg-gray-500 rounded hover:text-white font-semibold'
                         type='button'>
                         <i class='fa-solid fa-ellipsis'></i>
                       </button>
                     </a>
+                </div>
                     `
                 }
             },

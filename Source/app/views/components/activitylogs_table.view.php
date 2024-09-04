@@ -1,4 +1,4 @@
-<table id="activityLogsTable" class="rounded shadow">
+<table id="activityLogsTable" class="rounded shadow-xl">
     <thead>
         <tr>
             <th>

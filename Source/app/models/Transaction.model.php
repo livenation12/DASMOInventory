@@ -33,7 +33,6 @@ class Transaction extends Model
                 $errors = $item->errors;
             }
         }
-
         if (empty($errors)) {
             return $data; // Return data if successful
         }
@@ -171,7 +170,12 @@ class Transaction extends Model
                     week_label
                 ORDER BY 
                     week_label
-";
+                ";
         return $this->query($query);
+    }
+
+    public function pullout($data)
+    {
+        return $this->insert($data);
     }
 }

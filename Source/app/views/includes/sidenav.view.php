@@ -38,14 +38,14 @@
                </button>
             </a>
          </li>
-         <li>
-            <a class="" href="<?= ROOT ?>keepers">
-               <button class="sidenav-link <?= getActiveTab() === 'keepers' ? 'active-sidenav' : '' ?>" type="button">
+         <!-- <li>
+            <a class="" href="<?= ROOT ?>personnels">
+               <button class="sidenav-link <?= getActiveTab() === 'personnels' ? 'active-sidenav' : '' ?>" type="button">
                   <i class="fa-solid fa-users"></i>
-                  <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">keepers</p>
+                  <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">personnels</p>
                </button>
             </a>
-         </li>
+         </li> -->
       </ul>
    </div>
    <div class="absolute bottom-0">

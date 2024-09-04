@@ -7,57 +7,62 @@ npx tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/styles.c
 @tailwind utilities;
 
 
-input.soft-input{
+input.soft-input {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
 }
 
-.soft-label{
+.soft-label {
     @apply block mb-2 text-sm font-medium text-gray-900
 }
 
+.soft-select {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+}
 /* sidenav classes */
-.active-sidenav{
+.active-sidenav {
     @apply border-blue-400 border
 }
-.sidenav-link{
+
+.sidenav-link {
     @apply font-bold transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize
 }
 
-.btn-primary{
+.btn-primary {
     @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 focus:outline-none disabled:cursor-not-allowed
 }
 
 
+
 /* Datatable classes */
-.datatable-wrapper{
-   @apply overflow-x-auto rounded p-5 my-2 text-xs shadow
+.datatable-wrapper {
+    @apply overflow-x-auto rounded p-3 text-xs shadow
 }
 
-.datatable{
+.datatable {
     @apply w-full text-left rtl:text-right
 }
 
-.datatable tbody{
+.datatable tbody {
     @apply text-sm
 }
 
-.dt-buttons{
-   display: flex;
-   justify-content: end;
-   margin-bottom: -50px;
-   margin-top:20px
+.dt-buttons {
+    display: flex;
+    justify-content: end;
+    margin-bottom: -50px;
+    margin-top: 20px
 }
 
-.dt-search input{
+.dt-search input {
     height: 30px;
     margin-block: 15px;
 }
 
-.dt-search label{
+.dt-search label {
     margin-right: 8px;
     font-weight: 700;
 }
 
-.datatable tbody tr{
+.datatable tbody tr {
     @apply hover:bg-gray-200
 }

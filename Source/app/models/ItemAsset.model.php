@@ -13,14 +13,14 @@ class ItemAsset extends Model
 
     protected $functionsBeforeInsert  = [
         "createAssetId",
-
+        "formatInsertedData"
     ];
 
     private function validateInsertedData($data)
     {
         $this->errors = [];
         foreach ($data as $key => $value) {
-            if(empty($value)){
+            if (empty($value)) {
                 $this->errors[] = "All fields are required";
                 return false;
             }
@@ -31,6 +31,14 @@ class ItemAsset extends Model
                     return false;
                 }
             }
+        }
+        return $data;
+    }
+
+    protected function formatInsertedData($data)
+    {
+        foreach ($data as $key => $value) {
+            $data[$key] = strtoupper(trim($value));
         }
         return $data;
     }

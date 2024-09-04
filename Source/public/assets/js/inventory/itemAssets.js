@@ -25,6 +25,7 @@ const handleNewAsset = async (event) => {
             });
             $('#assetTypeTable').DataTable().ajax.reload();
             newAssetForm.reset();
+            fetchAssetTypeOptions();
         }
     } catch (error) {
         console.log(error);

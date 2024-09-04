@@ -1,6 +1,6 @@
 <!-- drawer component -->
 <div id="pullOutForm" class="fixed top-0 right-0 z-50 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-[500px] dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-          <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold">
+          <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-black font-semibold">
                     <i class="fa-solid fa-arrows-turn-right me-2"></i> Pull Out Form
           </h5>
           <button type="button" data-drawer-hide="pullOutForm" aria-controls="pullOutForm" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">

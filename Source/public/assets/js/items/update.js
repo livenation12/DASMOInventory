@@ -1,30 +1,18 @@
 const handleUpdateItem = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target)
     try {
-        const response = await useFetch('inventory/update', {
-            body: formData,
-        })
-        if (response.success) {
-            Swal.fire({
-                icon: "success",
-                title: "Item updated successfully",
-                timer: 1000,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.reload()
-            })
-        } else {
+        const response = await useFormFetch(event, 'inventory/update')
+        if (response) {
             Toast.fire({
-                icon: "error",
-                title: response.error || "An error occurred"
-            });
+                icon: "success",
+                title: "Item updated successfully, synching your data"
+            }).then(() => {
+                window.location.reload();
+            })
         }
     } catch (error) {
-        Toast.fire({
-            icon: "error",
-            title: "Server error"
-        });
+        console.log(error);
+
     }
 }
 

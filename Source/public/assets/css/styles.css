@@ -853,10 +853,6 @@ video {
   height: 2rem;
 }
 
-.h-\[200px\] {
-  height: 200px;
-}
-
 .h-\[calc\(100\%-1rem\)\] {
   height: calc(100% - 1rem);
 }
@@ -897,6 +893,10 @@ video {
   width: 0.75rem;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .w-44 {
   width: 11rem;
 }
@@ -913,10 +913,6 @@ video {
   width: 2rem;
 }
 
-.w-\[300px\] {
-  width: 300px;
-}
-
 .w-\[500px\] {
   width: 500px;
 }
@@ -928,6 +924,10 @@ video {
 .w-max {
   width: -moz-max-content;
   width: max-content;
+}
+
+.w-48 {
+  width: 12rem;
 }
 
 .max-w-2xl {
@@ -1004,6 +1004,10 @@ video {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -1305,11 +1309,6 @@ video {
 .bg-yellow-950 {
   --tw-bg-opacity: 1;
   background-color: rgb(66 32 6 / var(--tw-bg-opacity));
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-60 {
@@ -1684,6 +1683,29 @@ input.soft-input:focus {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
+.soft-select {
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  padding: 0.625rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.soft-select:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
+}
+
 /* sidenav classes */
 
 .active-sidenav {
@@ -1766,11 +1788,9 @@ input.soft-input:focus {
 /* Datatable classes */
 
 .datatable-wrapper {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   overflow-x: auto;
   border-radius: 0.25rem;
-  padding: 1.25rem;
+  padding: 0.75rem;
   font-size: 0.75rem;
   line-height: 1rem;
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -1792,19 +1812,19 @@ input.soft-input:focus {
   line-height: 1.25rem;
 }
 
-.dt-buttons{
+.dt-buttons {
   display: flex;
   justify-content: end;
   margin-bottom: -50px;
-  margin-top:20px
+  margin-top: 20px
 }
 
-.dt-search input{
+.dt-search input {
   height: 30px;
   margin-block: 15px;
 }
 
-.dt-search label{
+.dt-search label {
   margin-right: 8px;
   font-weight: 700;
 }
@@ -1891,6 +1911,11 @@ input.soft-input:focus {
 .hover\:text-purple-600:hover {
   --tw-text-opacity: 1;
   color: rgb(147 51 234 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {

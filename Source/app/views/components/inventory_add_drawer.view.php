@@ -19,8 +19,6 @@
                 <select id="assetType" name="assetType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="">Loading...</option>
                 </select>
-        
-                <!-- <input placeholder="Asset type" required type="text" name="assetType" id="assetType" class="soft-input" /> -->
                 <input placeholder="Brand" required type="text" name="brand" id="brand" class="soft-input" />
             </div>
         </div>
@@ -57,5 +55,5 @@
         <button type="submit" class="bg-blue-700 btn-primary">Add to inventory</button>
     </form>
 </div>
-
+<script src="<?= JS ?>items/assetTypes.js" defer></script>
 <script src="<?= JS ?>items/add.js" defer></script>

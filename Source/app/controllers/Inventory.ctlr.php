@@ -9,7 +9,6 @@ class Inventory extends Controller
         if (!Auth::isLogin()) {
             $this->redirect('login');
         }
-
         $this->view('inventory', ['csrfToken' => $csrfToken]);
     }
 
@@ -17,25 +16,25 @@ class Inventory extends Controller
     {
         $item = new Item();
         $inventory = $item->findAll();
-        echo json_encode(["payload" => $inventory ?? []]);
+        echo json_encode(['payload' => $inventory ?? []]);
     }
 
 
     function add()
     {
         $errors = [];
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
-            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST["csrfToken"])) {
-                $errors[] = (['success' => false, 'error' => 'Invalid token.']);
-            }
-            $item = new Item();
-            $validate = $item->validateInsertedData($_POST);
-            if ($validate) {
-                $isInserted = $item->insert($_POST);
-                unset($_SESSION['csrfToken']);
-                echo json_encode(['success' => true, "data" => $isInserted]);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
+                $errors[] = 'Invalid token.';
             } else {
+                unset($_SESSION['csrfToken']);
+                $item = new Item();
+                $item->create($_POST);
                 $errors = $item->errors;
+            }
+            if (empty($errors)) {
+                echo json_encode(['success' => true]);
+            } else {
                 echo json_encode(['success' => false, 'error' => $errors[0]]);
             }
         }
@@ -58,27 +57,29 @@ class Inventory extends Controller
                 }
             }
         }
-        $this->view("item_details", [
-            "details" => $details,
-            "csrfToken" => $csrfToken,
-            "transactions" => $itemTransactions,
-            "activeTransaction" => $activeTransaction
+        $this->view('item_details', [
+            'details' => $details,
+            'csrfToken' => $csrfToken,
+            'transactions' => $itemTransactions,
+            'activeTransaction' => $activeTransaction
         ]);
     }
 
     function pullout()
     {
         $errors = [];
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
-            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST["csrfToken"])) {
-                $errors[] = (['success' => false, 'error' => 'Invalid token.']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
+                $errors[] = 'Invalid token.';
+            } else {
+                unset($_SESSION['csrfToken']);
+                $transaction = new Transaction();
+                $transaction->pullout($_POST);
+                $errors = $transaction->errors;
             }
-            $transanction = new Transaction();
-            $insertTransaction = $transanction->insert($_POST);
-            if ($insertTransaction) {
+            if (empty($errors)) {
                 echo json_encode(['success' => true]);
             } else {
-                $errors = $transanction->errors;
                 echo json_encode(['success' => false, 'error' => $errors[0]]);
             }
         }
@@ -87,23 +88,21 @@ class Inventory extends Controller
     function update()
     {
         $errors = [];
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
-            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST["csrfToken"])) {
-                $errors[] = (['success' => false, 'error' => 'Invalid token.']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
+                $errors[] = 'Invalid token.';
+            } else {
+                unset($_POST['csrfToken']);
+                $item = new Item();
+                $item->updateItem($_POST);
+                $errors = $item->errors;
             }
-            unset($_POST["csrfToken"]);
-            $item = new Item();
-            $toUpdateItem = $item->single('itemId', $_POST["itemId"]);
-            if ($toUpdateItem) {
-                $errors[] = "Item does not exist";
-            }
-            $id = $toUpdateItem->id;
-            $update = $item->update($id, $_POST);
-            if ($update) {
+            if (empty($errors)) {
+                unset($_POST['csrfToken']);
                 echo json_encode(['success' => true]);
             } else {
                 $errors = $item->errors;
-                echo json_encode(['success' => false, 'error' => $errors]);
+                echo json_encode(['success' => false, 'error' => $errors[0]]);
             }
         }
     }
@@ -112,25 +111,25 @@ class Inventory extends Controller
     {
         $errors = [];
         date_default_timezone_set('Asia/Manila');
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && !empty($_POST)) {
-            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST["csrfToken"])) {
-                $errors[] = (['success' => false, 'error' => 'Invalid token.']);
-            }
-            unset($_POST["csrfToken"]);
-
-            $transactionId = $_POST["transactionId"];
-            $transaction = new Transaction();
-            $data["returnedDate"] = date("Y-m-d H:i:s");
-            $data["status"] = 0;
-            $data["receiverId"] = Auth::getUserId();
-            $update = $transaction->update($transaction->getIdByTableId("transactionId", $transactionId), $data);
-            if ($update) {
-                $item = new Item();
-                if (!($item->update($item->getIdByTableId("itemId", $_POST["itemId"]), ["currentLocation" => ""]))) {
-                    $errors = $item->errors;
-                }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
+                $errors[] = 'Invalid token.';
             } else {
-                $errors = $transaction->errors;
+                unset($_POST['csrfToken']);
+                $transactionId = $_POST['transactionId'];
+                $transaction = new Transaction();
+                $data['returnedDate'] = date('Y-m-d H:i:s');
+                $data['status'] = 0;
+                $data['receiverId'] = Auth::getUserId();
+                $update = $transaction->update($transaction->getIdByTableId('transactionId', $transactionId), $data);
+                if ($update) {
+                    $item = new Item();
+                    if (!($item->update($item->getIdByTableId('itemId', $_POST['itemId']), ['currentLocation' => '']))) {
+                        $errors = $item->errors;
+                    }
+                } else {
+                    $errors = $transaction->errors;
+                }
             }
             if (!empty($errors)) {
                 echo json_encode(['success' => false, 'error' => $errors[0]]);
@@ -143,12 +142,13 @@ class Inventory extends Controller
     function transaction($transactionId)
     {
         $transaction = new Transaction();
-        $transactionDetails = $transaction->single("transactionId", $transactionId);
-        $this->view("transaction_details", ["transactionDetails" => $transactionDetails]);
+        $transactionDetails = $transaction->single('transactionId', $transactionId);
+        $this->view('transaction_details', ['transactionDetails' => $transactionDetails]);
     }
 
     function borrowed()
     {
-        $this->view("borrowed_items");
+        $this->view('borrowed_items');
     }
+    
 }

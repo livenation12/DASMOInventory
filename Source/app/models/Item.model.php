@@ -50,7 +50,7 @@ class Item extends Model
         return $activityLog->insert($data);
     }
 
-    public function validateInsertedData($data)
+    private function validateInsertedData($data)
     {
 
         // Initialize an empty array for errors
@@ -111,5 +111,42 @@ class Item extends Model
         $query = "SELECT COUNT(*) as availableItemsCount FROM $this->table WHERE inHouse = '1'";
         $data =  $this->query($query);
         return $data[0]->availableItemsCount;
+    }
+
+    public function create($data)
+    {
+        if ($this->validateInsertedData($data)) {
+            return $this->insert($data);
+        }
+        return false;
+    }
+
+    public function updateItem($data)
+    {
+        return $this->update($this->getIdByTableId("itemId", $data["itemId"]), $data);
+    }
+
+
+    public function countBorrowedItemsByMonthFilterByAssetType($filter)
+    {
+        $query = "SELECT COUNT(*) as count, MONTHNAME(pullOutDate) as monthName 
+        FROM transactions 
+        JOIN {$this->table} ON transactions.itemId = {$this->table}.itemId";
+
+        if ($filter) {
+            $query .= " WHERE {$this->table}.assetType = :filter";
+        }
+
+        $query .= " GROUP BY monthName";
+
+        // Prepare data for binding
+        $data = [];
+        if ($filter) {
+            $data['filter'] = $filter;
+        }
+
+        // Execute the query using the `query` method
+        $result = $this->query($query, $data);
+        return $result;
     }
 }

@@ -14,12 +14,8 @@ const Toast = Swal.mixin({
 });
 
 const useFetch = async (url, request) => {
-    const defaultRequest = {
-        method: 'GET',
-    }
-    const finalRequest = { ...defaultRequest, ...request }
     try {
-        const response = await fetch(dasmoBaseUrl + url, finalRequest);
+        const response = await fetch(dasmoBaseUrl + url, request);
         if (!response.ok) {
             // If the response status is not OK, throw an error to be caught in the catch block
             const errorData = await response.json();
@@ -69,4 +65,3 @@ window.addEventListener("online", function () {
         title: "Connection restored",
     })
 })
-

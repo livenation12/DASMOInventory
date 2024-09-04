@@ -43,11 +43,10 @@ function randomString($length)
 
 function formatDate($date)
 {
-        if(!empty($date)){
+        if (!empty($date)) {
                 return date("M j, Y hA", strtotime($date));
         }
         return "";
-       
 }
 
 function show($data)
@@ -71,7 +70,16 @@ function viewPath($view)
         }
 }
 
+function viewComponent($view)
+{
+        if (file_exists("../app/views/components/" . $view . ".view.php")) {
+                return ("../app/views/components/" . $view . ".view.php");
+        } else {
+                return ("../app/views/404.view.php");
+        }
+}
+
 function getActiveTab()
 {
-       return App::getURL()[0];
+        return App::getURL()[0];
 }

@@ -1,6 +1,6 @@
 <div class="my-2">
     <h3 class="text-3xl font-bold">Transactions Masterlist</h3>
-    <div class="datatable-wrapper">
+    <div class="datatable-wrapper shadow-xl border-gray-600 border ">
         <div class="flex justify-end items-center mx-3">
             <div class="space-x-2 italic">
                 <span class="text-blue-500"><i class="fa-solid fa-circle-dot animate-pulse me-1"></i>Completed</span>
