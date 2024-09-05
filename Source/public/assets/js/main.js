@@ -40,7 +40,6 @@ const useFormFetch = async (event, url) => {
         if (response.success) {
             return response; // Resolve the Promise with response
         } else {
-            console.error(response);
             Toast.fire({
                 icon: "error",
                 title: response.error || "There's something wrong"

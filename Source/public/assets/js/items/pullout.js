@@ -14,9 +14,11 @@ const handlePullOut = async (event) => {
                               })
                     }
           } catch (error) {
+                    console.log(error);
+
                     Toast.fire({
                               icon: 'error',
-                              title: error.message || 'An unexpected error occurred.',
+                              title: 'An unexpected error occurred.',
                     })
           }
 };

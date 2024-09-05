@@ -12,6 +12,7 @@ class Transaction extends Model
         "returnDate",
         "returnedDate",
         "status",
+        "attachment",
     ];
     protected $functionsBeforeInsert = ["createTransactionId", "getApproverId", "insertPullOutDate", "setActiveStatus"];
     protected $functionsAfterInsert = ["handlePullOutType"];

@@ -49,8 +49,8 @@
             <input required type="text" name="designation" id="designation" class="soft-input" />
         </div>
         <div>
-            <label for="endUser" class="soft-label">End User</label>
-            <input required type="text" name="endUser" id="endUser" class="soft-input" />
+            <label for="endUser" class="soft-label">End User <span class="text-xs">(Optional)</span></label>
+            <input type="text" name="endUser" id="endUser" class="soft-input" />
         </div>
         <button type="submit" class="bg-blue-700 btn-primary">Add to inventory</button>
     </form>

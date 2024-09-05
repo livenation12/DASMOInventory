@@ -64,6 +64,35 @@ class Inventory extends Controller
             'activeTransaction' => $activeTransaction
         ]);
     }
+    private function mbConverter(int $numberMb)
+    {
+        return $numberMb * 1048576;
+    }
+
+    private function imageUploadErrorValidation($fileError)
+    {
+        switch ($fileError) {
+            case UPLOAD_ERR_OK:
+                return false; // No error, so return false (no validation error).
+            case UPLOAD_ERR_INI_SIZE:
+                return 'The uploaded file exceeds the system file size limit (php.ini).';
+            case UPLOAD_ERR_FORM_SIZE:
+                return 'The uploaded file exceeds the form file size limit.';
+            case UPLOAD_ERR_PARTIAL:
+                return 'The file was only partially uploaded.';
+            case UPLOAD_ERR_NO_FILE:
+                return 'No file was uploaded.';
+            case UPLOAD_ERR_NO_TMP_DIR:
+                return 'No temporary directory was found on the server.';
+            case UPLOAD_ERR_CANT_WRITE:
+                return 'Failed to write file to disk.';
+            case UPLOAD_ERR_EXTENSION:
+                return 'File upload was stopped by a PHP extension.';
+            default:
+                return 'Unknown upload error (code: ' . $fileError . ').';
+        }
+    }
+
 
     function pullout()
     {
@@ -72,11 +101,64 @@ class Inventory extends Controller
             if (!isset($_POST['csrfToken']) || !Token::validateCSRFToken($_POST['csrfToken'])) {
                 $errors[] = 'Invalid token.';
             } else {
-                unset($_SESSION['csrfToken']);
-                $transaction = new Transaction();
-                $transaction->pullout($_POST);
-                $errors = $transaction->errors;
+                if (empty($_FILES['attachment'])) {
+                    $errors[] = 'Please include an attachment.';
+                } else {
+                    $uploadValidation = $this->imageUploadErrorValidation($_FILES['attachment']['error']);
+                    if ($uploadValidation) {
+                        $errors[] = $uploadValidation;
+                    } else {
+                        // File should be only under 2MB
+                        if ($_FILES['attachment']['size'] > $this->mbConverter(2)) {
+                            $errors[] = 'The file is too large. Maximum file size is 2MB.';
+                        }
+
+                        // Check if the file is a PDF
+                        $tmpName = $_FILES['attachment']['tmp_name'];
+                        if (empty($tmpName)) {
+                            $errors[] = 'Temporary file name is missing.';
+                        } else {
+                            $finfo = new finfo(FILEINFO_MIME_TYPE);
+                            $mimeType = $finfo->file($tmpName);
+                            $allowedType = ['application/pdf'];
+                            if (!in_array($mimeType, $allowedType)) {
+                                $errors[] = 'The file is not a PDF. Please upload a PDF.';
+                            }
+                        }
+
+                        // If there are no errors, proceed with file handling
+                        if (empty($errors)) {
+                            $pathInfo = pathinfo($_FILES['attachment']['name']);
+                            $base = $pathInfo['filename'];
+                            $base = preg_replace("/[^a-zA-Z0-9_-]/", "_", $base);
+                            $filename = $base . '.' . $pathInfo['extension'];
+                            $fileDistination = dirname(__DIR__) . '/uploads/' . $filename;
+
+                            // Handle file name conflicts
+                            $i = 1;
+                            while (file_exists($fileDistination)) {
+                                $filename = $base . "($i)." . $pathInfo['extension'];
+                                $fileDistination = dirname(__DIR__) . '/uploads/' . $filename;
+                                $i++;
+                            }
+
+                            // Move the uploaded file to the destination folder
+                            if (!move_uploaded_file($tmpName, $fileDistination)) {
+                                $errors[] = 'Cannot move file. Please try again.';
+                            } else {
+                                // Process further if no errors
+                                $_POST['attachment'] = $filename;
+                                unset($_SESSION['csrfToken']);
+                                $transaction = new Transaction();
+                                $transaction->pullout($_POST);
+                                $errors = $transaction->errors;
+                            }
+                        }
+                    }
+                }
             }
+
+            // Return response
             if (empty($errors)) {
                 echo json_encode(['success' => true]);
             } else {
@@ -84,6 +166,8 @@ class Inventory extends Controller
             }
         }
     }
+
+
 
     function update()
     {
@@ -150,5 +234,4 @@ class Inventory extends Controller
     {
         $this->view('borrowed_items');
     }
-    
 }

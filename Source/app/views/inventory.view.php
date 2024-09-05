@@ -12,7 +12,7 @@
                         <?php $this->view("components/inventory_table") ?>
                 </div>
                 <section>
-                        <div class="space-y-3 rounded  border-gray-600 border shadow-xl p-3">
+                        <div class="space-y-3 rounded border shadow-xl p-3">
                                 <h3 class="font-bold text-xl my-3">Asset Types</h3>
                                 <form id="newAssetForm" method="post" class="inline-flex gap-2">
                                         <input type="hidden" name="csrfToken" value="<?= escape($csrfToken); ?>">
