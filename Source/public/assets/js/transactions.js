@@ -52,7 +52,7 @@ $(document).ready(function () {
                     return `
                 <div class="inline-flex justify-center items-center gap-x-2">
                     <i class='fa-solid fa-circle-dot animate-pulse ${data > 0 ? 'text-yellow-500' : 'text-blue-500'} '></i>
-                    <a title='Full details' href='${dasmoBaseUrl}inventory/items/${row.itemId}'>
+                    <a title='Full details' href='${dasmoBaseUrl}inventory/transaction/${row.transactionId}'>
                       <button
                         class='py-2 px-4 hover:bg-gray-500 rounded hover:text-white font-semibold'
                         type='button'>

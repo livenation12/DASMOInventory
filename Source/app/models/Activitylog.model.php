@@ -21,7 +21,7 @@ class Activitylog extends Model
 
           public function createActivityLogId($data)
           {
-                    $data["activityLogId"] = randomString(50);
+                    $data["activityLogId"] = randomString(10);
                     return $data;
           }
 

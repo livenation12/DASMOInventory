@@ -26,7 +26,7 @@
         <title><?= ucfirst(getActiveTab()) ?></title>
 </head>
 
-<body class="bg-gray-50 max-w-[100vw]">
+<body class="bg-gray-300 max-w-[100vw]">
 
         <?php
         if (Auth::isLogin()) :

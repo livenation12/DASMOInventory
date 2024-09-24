@@ -77,7 +77,7 @@ class Transaction extends Model
     protected function createTransactionId($data)
     {
 
-        $data["transactionId"] = randomString(50);
+        $data["transactionId"] = randomString(10);
         return $data;
     }
 
@@ -178,5 +178,10 @@ class Transaction extends Model
     public function pullout($data)
     {
         return $this->insert($data);
+    }
+
+    public function rowCount()
+    {
+        return  $this->tableRowCount();
     }
 }

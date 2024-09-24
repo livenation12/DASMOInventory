@@ -1,4 +1,4 @@
-<div class="datatable-wrapper shadow-xl border ">
+<div class="datatable-wrapper w-full">
     <div class="flex justify-end items-center mx-3">
         <div class="space-x-2 italic">
             <span class="text-blue-500"><i class="fa-solid fa-circle-dot animate-pulse me-1"></i>Available</span>

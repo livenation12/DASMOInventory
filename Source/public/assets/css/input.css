@@ -6,6 +6,9 @@ npx tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/styles.c
 @tailwind components;
 @tailwind utilities;
 
+.component-wrapper{
+    @apply bg-gray-50 p-3 border rounded shadow-xl
+}
 
 input.soft-input {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
@@ -40,7 +43,7 @@ input.soft-input {
 
 /* Datatable classes */
 .datatable-wrapper {
-    @apply overflow-x-auto rounded p-3 text-xs shadow
+    @apply overflow-x-auto rounded p-3 text-xs shadow component-wrapper
 }
 
 .datatable {

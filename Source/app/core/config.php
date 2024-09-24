@@ -6,7 +6,7 @@ define("JS", ASSETS."js/");
 define("CSS", ASSETS."css/");
 define("LIB", ASSETS."lib/");
 define('DBDRIVER', 'mysql');
-define("DBHOST", "localhost");
+define("DBHOST", "127.0.0.1");
 define("DBUSER" , "root");
 define("DBPASSWORD", "");
 define("DBNAME", "inventory");

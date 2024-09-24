@@ -3,7 +3,7 @@
 <a href="<?= ROOT ?>inventory/items/<?= $transactionDetails->itemId ?>"><i class="fa-solid fa-arrow-left ms-2 my-2"></i>
           <strong class="text-xl font-bold tracking-wide ms-2">Transaction Details</strong>
 </a>
-<div class=" <?= ($transactionDetails->pullOutType === "Temporary") ? "bg-blue-500" : "bg-slate-700" ?> rounded-lg p-4 text-white md:w-2/3 mt-3">
+<div class="component-wrapper md:w-2/3 mt-3">
           <?php if ($transactionDetails->status === "active") : ?> <p class="text-green-500 italic"><i class="fa-solid fa-circle-dot animate-pulse"></i> Active</p> <?php endif; ?>
 
           <div class="grid grid-cols-2 md:grid-cols-4 my-5">
@@ -29,11 +29,13 @@
                               <strong class="">Received by:</strong>
                               <i class="text-sm"><?= $transactionDetails->receiverName ?></i>
                     <?php endif ?>
+
+          </div>
+          <div class="my-2">
+                    <h3 class="text-lg font-semibold">Attachment</h3>
+                    <a class="underline text-blue-500" target="_blank" href="<?= UPLOADS . $transactionDetails->attachment ?>"><?= $transactionDetails->attachment ?></a>
           </div>
 </div>
-<div class="my-2">
-          <h3 class="text-xl font-semibold">Attachment</h3>
-          <a class="underline text-blue-500" target="_blank" href="<?= UPLOADS . $transactionDetails->attachment ?>"><?= $transactionDetails->attachment ?></a>
-</div>
+
 
 <?php $this->view("includes/footer"); ?>

@@ -1,5 +1,5 @@
 <section class="my-2">
-          <div class="shadow-xl border rounded p-3">
+          <div class="component-wrapper">
                     <canvas id="weeklyReportChart" height="100"></canvas>
           </div>
 </section>

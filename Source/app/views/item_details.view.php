@@ -1,12 +1,13 @@
 <?php $this->view("includes/header"); ?>
+<?php include viewComponent("item_deleteconfirm_modal"); ?>
 <div class="mt-3">
           <a onclick="history.back()"><i class="fa-solid fa-arrow-left ms-2 my-2"></i>
                     <strong class="text-xl font-bold tracking-wide ms-2">Item Details</strong>
           </a>
-          <div class="grid grid-cols-1 lg:grid-cols-3">
+          <div class="grid gap-2 grid-cols-1 lg:grid-cols-3">
                     <div class="col-span-2 relative">
-                              <div class="overflow-x-auto rounded-xl text-sm p-5 border-2 my-2 shadow-xl text-white bg-slate-700">
-                                        <div class="grid md:grid-cols-3 my-3 text-white/80 gap-y-2 mx-3">
+                              <div class="overflow-x-auto component-wrapper my-2 text-sm">
+                                        <div class="grid md:grid-cols-3 gap-y-2 mx-3">
                                                   <strong class="text-base">Description:</strong><i class="col-span-2"><?= ($details->assetType ?? '') . " " . ($details->brand ?? '') ?></i>
                                                   <strong class="text-base">Property number:</strong><i class="col-span-2"><?= $details->propNumber ?></i>
                                                   <strong class="text-base">Serial number:</strong><i class="col-span-2"><?= $details->serialNumber ?></i>
@@ -17,12 +18,12 @@
                                                             <strong class="text-lg">Current Location:</strong><span class="col-span-2 text-base font-semibold underline text-blue-400"><?= $details->currentLocation ?></span>
                                                   <?php endif ?>
                                         </div>
-                                        <span class="text-xs float-end">Encoded by: <i class=""><?= $details->encoder ?></i></span>
+                                        <span class="text-xs float-end">Encoded by: <i><?= $details->encoder ?></i></span>
                               </div>
                               <div class="flex text-white gap-x-2">
                                         <?php if (!empty($details->currentLocation)) { ?>
 
-                                                  <button data-modal-target="returnItemModal" data-modal-toggle="returnItemModal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                                  <button data-modal-target="returnItemModal" data-modal-toggle="returnItemModal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                                             <i class="fa-solid fa-undo"></i> Return
                                                   </button>
                                                   <?php $this->view("components/item_return_modal", ["details" => $details, "csrfToken" => $csrfToken, "activeTransaction" => $activeTransaction]) ?>
@@ -56,10 +57,10 @@
                               </div>
                     </div>
                     <div class="relative">
-                              <div class="overflow-auto max-h-[80vh] rounded-xl p-5 border-2 my-2 text-xs shadow-xl text-white bg-gray-700">
+                              <div class="overflow-auto max-h-[80vh] component-wrapper my-2 text-xs">
                                         <table class="w-full">
                                                   <thead>
-                                                            <tr class="border-b-4 border-gray-500">
+                                                            <tr>
                                                                       <th class="pb-2">
                                                                                 <h3 class="text-xl text-start font-bold tracking-wide">Transactions</h3>
                                                                       </th>
@@ -70,9 +71,9 @@
                                                             if (!empty($transactions)) :
                                                                       foreach ($transactions as $transaction) : ?>
                                                                                 <tr>
-                                                                                          <td class="border-b border-gray-500">
+                                                                                          <td>
                                                                                                     <a href="<?= ROOT ?>inventory/transaction/<?= $transaction->transactionId ?>">
-                                                                                                              <div class="hover:bg-gray-600 min-h-16 p-3 space-y-1 rounded" data-drawer-target="transactionDetails" data-drawer-show="transactionDetails" data-drawer-placement="right" aria-controls="transactionDetails" type="button" data-drawer-target="transactionDetails" data-drawer-show="transactionDetails" data-drawer-placement="right" aria-controls="transactionDetails">
+                                                                                                              <div class="hover:bg-gray-200 min-h-16 p-3 space-y-1 rounded" data-drawer-target="transactionDetails" data-drawer-show="transactionDetails" data-drawer-placement="right" aria-controls="transactionDetails" type="button" data-drawer-target="transactionDetails" data-drawer-show="transactionDetails" data-drawer-placement="right" aria-controls="transactionDetails">
                                                                                                                         <?php if ($transaction->status) : ?> <p class="text-green-500 italic"><i class="fa-solid fa-circle-dot animate-pulse"></i> Active</p> <?php endif; ?>
                                                                                                                         <span class="text-xs float-end"><?= formatDate($transaction->pullOutDate) ?></span>
                                                                                                                         <p class="text-base"><?= $transaction->fromLocation ?> - <?= $transaction->toLocation ?></p>
@@ -104,6 +105,5 @@
           </div>
 </div>
 <?php $this->view("components/item_update_drawer", ["details" => $details, "csrfToken" => $csrfToken]) ?>
-<?php $this->view("components/item_deleteconfirm_modal", ["details" => $details, "csrfToken" => $csrfToken]) ?>
 <script src="<?= JS ?>items.js"></script>
 <?php $this->view("includes/footer") ?>

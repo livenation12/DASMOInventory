@@ -2,9 +2,11 @@
 
 class Item extends Model
 {
+    private $activityLog;
     public function __construct()
     {
         parent::__construct();
+        $this->activityLog = new Activitylog();
     }
 
     protected $allowedColumns = [
@@ -38,21 +40,39 @@ class Item extends Model
     ];
 
     protected $functionsAfterInsert = [
-        "logActivity"
+        "logAddActivity"
     ];
 
-    protected function logActivity($data)
+    protected $functionsAfterDelete = [
+        "logDeleteActivity"
+    ];
+
+    public function logUpdateActivity($data)
     {
-        $activityLog = new Activitylog();
+        $data["providerId"] = Auth::getUserId();
+        $data["action"] = "UPDATED";
+        $data["consumerId"] = $data["itemId"];
+        return $this->activityLog->insert($data);
+    }
+
+    protected function logAddActivity($data)
+    {
         $data["providerId"] = $data["addedBy"];
         $data["action"] = "ADDED";
         $data["consumerId"] = $data["itemId"];
-        return $activityLog->insert($data);
+        return $this->activityLog->insert($data);
+    }
+
+    protected function logDeleteActivity($data)
+    {
+        $data["providerId"] = Auth::getUserId();
+        $data["action"] = "DELETED";
+        $data["consumerId"] = $data["itemId"];
+        return $this->activityLog->insert($data);
     }
 
     private function validateInsertedData($data)
     {
-
         // Initialize an empty array for errors
         $this->errors = [];
         // Check each key-value pair in the data
@@ -79,7 +99,7 @@ class Item extends Model
     }
     protected function createItemId($data)
     {
-        $data["itemId"] = randomString(50);
+        $data["itemId"] = randomString(10);
         return $data;
     }
 

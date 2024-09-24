@@ -2,6 +2,12 @@
 
 class Inventory extends Controller
 {
+    private $item;
+
+    public function __construct()
+    {
+        $this->item = new Item();
+    }
 
     function index()
     {
@@ -30,6 +36,7 @@ class Inventory extends Controller
                 unset($_SESSION['csrfToken']);
                 $item = new Item();
                 $item->create($_POST);
+                
                 $errors = $item->errors;
             }
             if (empty($errors)) {
@@ -118,9 +125,13 @@ class Inventory extends Controller
                         if (empty($tmpName)) {
                             $errors[] = 'Temporary file name is missing.';
                         } else {
+
+                            //get the finfo class to get the mime type
                             $finfo = new finfo(FILEINFO_MIME_TYPE);
+                            //get the mime type
                             $mimeType = $finfo->file($tmpName);
                             $allowedType = ['application/pdf'];
+                            // Check if the file is on allowed types
                             if (!in_array($mimeType, $allowedType)) {
                                 $errors[] = 'The file is not a PDF. Please upload a PDF.';
                             }
@@ -130,17 +141,14 @@ class Inventory extends Controller
                         if (empty($errors)) {
                             $pathInfo = pathinfo($_FILES['attachment']['name']);
                             $base = $pathInfo['filename'];
+                            $item = new Item();
+                            $transaction = new Transaction();
+                            $itemDetails = $item->single('itemId', $_POST['itemId']);
+                            $base = $itemDetails->propNumber ? $itemDetails->propNumber : $itemDetails->serialNumber;
                             $base = preg_replace("/[^a-zA-Z0-9_-]/", "_", $base);
-                            $filename = $base . '.' . $pathInfo['extension'];
+                            $uniquefier = $transaction->rowCount() + 1;
+                            $filename = $base . '-' . $uniquefier . '.' . $pathInfo['extension'];
                             $fileDistination = dirname(__DIR__) . '/uploads/' . $filename;
-
-                            // Handle file name conflicts
-                            $i = 1;
-                            while (file_exists($fileDistination)) {
-                                $filename = $base . "($i)." . $pathInfo['extension'];
-                                $fileDistination = dirname(__DIR__) . '/uploads/' . $filename;
-                                $i++;
-                            }
 
                             // Move the uploaded file to the destination folder
                             if (!move_uploaded_file($tmpName, $fileDistination)) {
@@ -149,7 +157,6 @@ class Inventory extends Controller
                                 // Process further if no errors
                                 $_POST['attachment'] = $filename;
                                 unset($_SESSION['csrfToken']);
-                                $transaction = new Transaction();
                                 $transaction->pullout($_POST);
                                 $errors = $transaction->errors;
                             }
@@ -167,7 +174,22 @@ class Inventory extends Controller
         }
     }
 
-
+    function delete($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $errors = [];
+            $data["itemId"] = $id;
+            $deleteItem = $this->item->delete($this->item->getIdByTableId('itemId', $id), $data);
+            if (!$deleteItem) {
+                $errors[] = 'Failed to delete item.';
+            }
+            if (empty($errors)) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => $errors[0]]);
+            }
+        }
+    }
 
     function update()
     {
@@ -178,7 +200,9 @@ class Inventory extends Controller
             } else {
                 unset($_POST['csrfToken']);
                 $item = new Item();
-                $item->updateItem($_POST);
+                if($item->updateItem($_POST)){
+                    $item->logUpdateActivity($_POST);
+                }
                 $errors = $item->errors;
             }
             if (empty($errors)) {

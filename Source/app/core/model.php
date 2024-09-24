@@ -135,6 +135,7 @@ class Model extends Database
 
         public function update($id, $data)
         {
+                $rawData = $data;
                 // Functions to run before update
                 if (property_exists($this, "beforeUpdate")) {
                         foreach ($this->beforeUpdate as $func) {
@@ -149,14 +150,34 @@ class Model extends Database
 
                 $data["id"] = $id;
                 $query = "UPDATE $this->table SET $string WHERE id = :id";
-                return $this->query($query, $data);
+                $result =  $this->query($query, $data);
+                if ($result) {
+                        if (property_exists($this, "functionsAfterUpdate")) {
+                                foreach ($this->functionsAfterUpdate as $func) {
+                                        $data = $this->$func($rawData);
+                                }
+                                return $data;
+                        }
+                        return $result;
+                }
+                return false;
         }
 
-        public function delete($id)
+        public function delete($id, $extras = [])
         {
                 $data["id"] = $id;
                 $query = "DELETE FROM $this->table WHERE id = :id";
-                return  $this->query($query, $data);
+                return $this->query($query, $data);
+                if ($result) {
+                        if (property_exists($this, "functionsAfterDelete")) {
+                                foreach ($this->functionsAfterDelete as $func) {
+                                        $data = $this->$func($extras);
+                                }
+                                return $data;
+                        }
+                        return $result;
+                }
+                return false;
         }
 
 
@@ -192,5 +213,15 @@ class Model extends Database
         public function getTableColumnId()
         {
                 return rtrim($this->table, "s") . "Id";
+        }
+
+        protected function tableRowCount()
+        {
+                $query = "SELECT COUNT(*) as count FROM $this->table";
+                $result = $this->query($query);
+                if ($result) {
+                        return $result[0]->count;
+                }
+                return 0;
         }
 }
